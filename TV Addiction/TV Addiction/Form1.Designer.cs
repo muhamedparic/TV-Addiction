@@ -49,7 +49,9 @@
             this.cbbox_selectSeries.Location = new System.Drawing.Point(6, 19);
             this.cbbox_selectSeries.Name = "cbbox_selectSeries";
             this.cbbox_selectSeries.Size = new System.Drawing.Size(363, 21);
+            this.cbbox_selectSeries.Sorted = true;
             this.cbbox_selectSeries.TabIndex = 0;
+            this.cbbox_selectSeries.SelectedIndexChanged += new System.EventHandler(this.cbbox_selectSeries_SelectedIndexChanged);
             // 
             // groupBox1
             // 
@@ -153,6 +155,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "form_main";
             this.Text = "TV Addiction";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.form_main_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

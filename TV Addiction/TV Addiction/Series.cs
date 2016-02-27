@@ -14,9 +14,11 @@ namespace TV_Addiction
         List<Episode> episodes;
         int nextEpisodeIdx;
 
-        public Series()
+        public Series(string path, string name)
         {
-
+            Path = path;
+            Name = name;
+            episodes = new List<Episode>();
         }
 
         public void AdvanceEpisode()
@@ -51,6 +53,11 @@ namespace TV_Addiction
             }
 
             throw new ArgumentOutOfRangeException("season or episode", "Season or episode index out of range");
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
