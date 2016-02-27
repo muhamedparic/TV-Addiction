@@ -19,6 +19,7 @@ namespace TV_Addiction
         {
             InitializeComponent();
             Settings.Load();
+            LoadUserData();
         }
 
         private void btn_addSeries_Click(object sender, EventArgs e)
@@ -38,6 +39,8 @@ namespace TV_Addiction
 
         private void form_main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (cbbox_selectSeries.Items.Count == 0)
+                return;
             using (XmlTextWriter writer = new XmlTextWriter(Settings.UserDataFile, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;

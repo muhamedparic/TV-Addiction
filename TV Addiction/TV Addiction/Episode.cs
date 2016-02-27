@@ -61,6 +61,10 @@ namespace TV_Addiction
             {
                 return season;
             }
+            set
+            {
+                season = value;
+            }
         }
 
         public int EpisodeNumber
@@ -68,6 +72,10 @@ namespace TV_Addiction
             get
             {
                 return episodeNumber;
+            }
+            set
+            {
+                episodeNumber = value;
             }
         }
 

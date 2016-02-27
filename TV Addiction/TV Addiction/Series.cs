@@ -12,17 +12,36 @@ namespace TV_Addiction
     {
         public string Path { get; set; }
         public string Name { get; set; }
+        public Dictionary<int, int> EpisodeCount
+        {
+            get
+            {
+                return episodeCount;
+            }
+        }
 
         List<Episode> episodes;
         int nextEpisodeIdx;
+        Dictionary<int, int> episodeCount;
 
         public Series(string path, string name)
         {
             Path = path;
             Name = name;
+            nextEpisodeIdx = 0;
             episodes = new List<Episode>();
             FindVideos(path);
             FindSubtitles(path);
+
+            episodes.Sort();
+
+            episodeCount = new Dictionary<int, int>();
+            foreach (Episode ep in episodes)
+            {
+                if (!episodeCount.ContainsKey(ep.Season))
+                    episodeCount[ep.Season] = 0;
+                episodeCount[ep.Season]++;
+            }
         }
 
         private void FindVideos(string path)
@@ -140,6 +159,7 @@ namespace TV_Addiction
         {
             writer.WriteStartElement("show");
             writer.WriteElementString("name", Name);
+            writer.WriteElementString("next-episode", nextEpisodeIdx.ToString());
             foreach (Episode ep in episodes)
                 ep.WriteToXml(writer);
             writer.WriteEndElement();
