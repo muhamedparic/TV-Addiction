@@ -19,6 +19,7 @@ namespace TV_Addiction
             InitializeComponent();
             // TEMPORARY:
             Settings.VlcPath = @"C:\Program Files\VideoLAN\VLC\vlc.exe";
+            lbox_selectSeason.Items.Add("Yello");
         }
 
         private void btn_addSeries_Click(object sender, EventArgs e)
@@ -39,6 +40,7 @@ namespace TV_Addiction
         private void form_main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Save
+            MessageBox.Show(lbox_selectSeason.SelectedItem as string);
         }
 
         private void btn_playNext_Click(object sender, EventArgs e)
@@ -48,6 +50,7 @@ namespace TV_Addiction
                 Process vlcProcess = new Process();
                 vlcProcess.StartInfo.FileName = Settings.VlcPath;
                 vlcProcess.StartInfo.Arguments = (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodePath();
+                //vlcProcess.StartInfo.Arguments = @"C:\Users\Muhamed\Downloads\TV\The.Office.US.S06.Season.6.Complete.720p.HDTV.x264-[maximersk]\The.Office.US.S06E13.720p.HDTV.X264-MRSK.mkv";
                 vlcProcess.Start();
             }
             catch (Exception)

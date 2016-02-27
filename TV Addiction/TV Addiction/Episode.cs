@@ -5,6 +5,7 @@ namespace TV_Addiction
     class Episode : IComparable
     {
         public string Path { get; set; }
+        public string SubtitlePath { get; set; }
         int season, episodeNumber;
 
         public Episode(string path, int season, int episodeNumber)
