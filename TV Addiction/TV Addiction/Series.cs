@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace TV_Addiction
 {
@@ -19,6 +20,36 @@ namespace TV_Addiction
             Path = path;
             Name = name;
             episodes = new List<Episode>();
+            FindVideos(path);
+            FindSubtitles(path);
+        }
+
+        private void FindVideos(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+
+            foreach (string file in files)
+            {
+                foreach (string extension in Settings.VideoExtensions)
+                {
+                    if (file.EndsWith(extension))
+                    {
+                        try
+                        {
+                            episodes.Add(new Episode(file));
+                        }
+                        catch (Exception)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void FindSubtitles(string path)
+        {
+
         }
 
         public void AdvanceEpisode()

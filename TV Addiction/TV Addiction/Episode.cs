@@ -8,11 +8,21 @@ namespace TV_Addiction
         public string SubtitlePath { get; set; }
         int season, episodeNumber;
 
-        public Episode(string path, int season, int episodeNumber)
+        public Episode(string path)
         {
             Path = path;
-            this.season = season;
-            this.episodeNumber = episodeNumber;
+            season = ExtractSeason(path);
+            episodeNumber = ExtractEpisodeNumber(path);
+        }
+
+        private int ExtractSeason(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        private int ExtractEpisodeNumber(string path)
+        {
+            throw new NotImplementedException();
         }
 
         public int CompareTo(object obj)
