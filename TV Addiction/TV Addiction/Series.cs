@@ -55,6 +55,11 @@ namespace TV_Addiction
             throw new ArgumentOutOfRangeException("season or episode", "Season or episode index out of range");
         }
 
+        public string GetNextEpisodePath()
+        {
+            return episodes[nextEpisodeIdx].Path;
+        }
+
         public override string ToString()
         {
             return Name;

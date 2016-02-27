@@ -116,6 +116,7 @@
             this.btn_playNext.Text = "Play next";
             this.btn_playNext.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_playNext.UseVisualStyleBackColor = true;
+            this.btn_playNext.Click += new System.EventHandler(this.btn_playNext_Click);
             // 
             // btn_playSelected
             // 
@@ -136,10 +137,6 @@
             this.btn_seriesSettings.TabIndex = 6;
             this.btn_seriesSettings.Text = "Settings";
             this.btn_seriesSettings.UseVisualStyleBackColor = true;
-            // 
-            // fbd_selectFolder
-            // 
-            this.fbd_selectFolder.SelectedPath = "C:\\Users\\Muhamed\\Downloads";
             // 
             // form_main
             // 
