@@ -33,6 +33,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_deleteSeries = new System.Windows.Forms.Button();
             this.btn_addSeries = new System.Windows.Forms.Button();
+            this.lbox_selectSeason = new System.Windows.Forms.ListBox();
+            this.lbox_selectEpisode = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,12 +83,48 @@
             this.btn_addSeries.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_addSeries.UseVisualStyleBackColor = true;
             // 
+            // lbox_selectSeason
+            // 
+            this.lbox_selectSeason.FormattingEnabled = true;
+            this.lbox_selectSeason.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "1",
+            "2",
+            "3",
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.lbox_selectSeason.Location = new System.Drawing.Point(42, 138);
+            this.lbox_selectSeason.Name = "lbox_selectSeason";
+            this.lbox_selectSeason.Size = new System.Drawing.Size(121, 134);
+            this.lbox_selectSeason.TabIndex = 2;
+            // 
+            // lbox_selectEpisode
+            // 
+            this.lbox_selectEpisode.FormattingEnabled = true;
+            this.lbox_selectEpisode.Location = new System.Drawing.Point(285, 138);
+            this.lbox_selectEpisode.Name = "lbox_selectEpisode";
+            this.lbox_selectEpisode.Size = new System.Drawing.Size(121, 134);
+            this.lbox_selectEpisode.TabIndex = 3;
+            // 
             // form_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(447, 356);
+            this.Controls.Add(this.lbox_selectEpisode);
+            this.Controls.Add(this.lbox_selectSeason);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "form_main";
             this.Text = "TV Addiction";
             this.groupBox1.ResumeLayout(false);
@@ -100,6 +138,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btn_deleteSeries;
         private System.Windows.Forms.Button btn_addSeries;
+        private System.Windows.Forms.ListBox lbox_selectSeason;
+        private System.Windows.Forms.ListBox lbox_selectEpisode;
     }
 }
 

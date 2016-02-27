@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <vlc-location>C:\Program Files\VideoLAN\VLC\vlc.exe</vlc-location>
+  <video-extensions>
+    <extension>.mkv</extension>
+    <extension>.mp4</extension>
+    <extension>.avi</extension>
+  </video-extensions>
+  <subtitle-extensions>
+    <extension>.srt</extension>
+    <extension>.sub</extension>
+  </subtitle-extensions>
+</config>
