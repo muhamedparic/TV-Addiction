@@ -16,5 +16,10 @@ namespace TV_Addiction
         {
             InitializeComponent();
         }
+
+        private void btn_addSeries_Click(object sender, EventArgs e)
+        {
+            fbd_selectFolder.ShowDialog();
+        }
     }
 }

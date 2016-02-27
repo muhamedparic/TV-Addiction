@@ -38,6 +38,7 @@
             this.btn_playNext = new System.Windows.Forms.Button();
             this.btn_playSelected = new System.Windows.Forms.Button();
             this.btn_seriesSettings = new System.Windows.Forms.Button();
+            this.fbd_selectFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,6 +86,7 @@
             this.btn_addSeries.Text = "Add";
             this.btn_addSeries.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_addSeries.UseVisualStyleBackColor = true;
+            this.btn_addSeries.Click += new System.EventHandler(this.btn_addSeries_Click);
             // 
             // lbox_selectSeason
             // 
@@ -133,6 +135,10 @@
             this.btn_seriesSettings.Text = "Settings";
             this.btn_seriesSettings.UseVisualStyleBackColor = true;
             // 
+            // fbd_selectFolder
+            // 
+            this.fbd_selectFolder.SelectedPath = "C:\\Users\\Muhamed\\Downloads";
+            // 
             // form_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +169,7 @@
         private System.Windows.Forms.Button btn_playNext;
         private System.Windows.Forms.Button btn_playSelected;
         private System.Windows.Forms.Button btn_seriesSettings;
+        private System.Windows.Forms.FolderBrowserDialog fbd_selectFolder;
     }
 }
 
