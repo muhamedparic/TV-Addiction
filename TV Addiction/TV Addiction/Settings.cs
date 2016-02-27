@@ -14,8 +14,9 @@ namespace TV_Addiction
 
         public static void Load(string file = "config.xml")
         {
-            // TEMPORARY
-            VideoExtensions = new List<string>{".mkv", ".avi", ".mp4"};
+#warning Method not complete
+            VideoExtensions = new List<string> { ".mkv", ".avi", ".mp4" };
+            SubtitleExtensions = new List<string> { ".srt", ".sub" };
         }
     }
 }

@@ -18,7 +18,7 @@ namespace TV_Addiction
         {
             InitializeComponent();
             // TEMPORARY:
-            Settings.VlcPath = @"C:\Program Files\VideoLAN\VLC\vlc.exe";
+            Settings.Load();
         }
 
         private void btn_addSeries_Click(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace TV_Addiction
 
         private void form_main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Save
+#warning Saving not implemented
         }
 
         private void btn_playNext_Click(object sender, EventArgs e)

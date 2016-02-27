@@ -17,12 +17,30 @@ namespace TV_Addiction
 
         public static int ExtractSeason(string path)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < path.Length - 2; i++)
+            {
+                if (path[i].ToString().ToUpper() == "S")
+                {
+                    if (path[i + 1] >= '0' && path[i + 1] <= '9' && path[i + 2] >= '0' && path[i + 2] <= '9')
+                        return 10 * Convert.ToInt32(path[i + 1]) + Convert.ToInt32(path[i + 2]);
+                }
+            }
+
+            throw new ArgumentException("Improper path");
         }
 
         public static int ExtractEpisodeNumber(string path)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < path.Length - 2; i++)
+            {
+                if (path[i].ToString().ToUpper() == "E")
+                {
+                    if (path[i + 1] >= '0' && path[i + 1] <= '9' && path[i + 2] >= '0' && path[i + 2] <= '9')
+                        return 10 * Convert.ToInt32(path[i + 1]) + Convert.ToInt32(path[i + 2]);
+                }
+            }
+
+            throw new ArgumentException("Improper path");
         }
 
         public int CompareTo(object obj)
