@@ -15,12 +15,12 @@ namespace TV_Addiction
             episodeNumber = ExtractEpisodeNumber(path);
         }
 
-        private int ExtractSeason(string path)
+        public static int ExtractSeason(string path)
         {
             throw new NotImplementedException();
         }
 
-        private int ExtractEpisodeNumber(string path)
+        public static int ExtractEpisodeNumber(string path)
         {
             throw new NotImplementedException();
         }

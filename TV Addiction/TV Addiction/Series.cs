@@ -37,6 +37,7 @@ namespace TV_Addiction
                         try
                         {
                             episodes.Add(new Episode(file));
+                            break;
                         }
                         catch (Exception)
                         {
@@ -45,11 +46,49 @@ namespace TV_Addiction
                     }
                 }
             }
+
+            string[] directories = Directory.GetDirectories(path);
+
+            foreach (string directory in directories)
+                FindVideos(directory);
         }
 
         private void FindSubtitles(string path)
         {
+            string[] files = Directory.GetFiles(path);
 
+            foreach (string file in files)
+            {
+                foreach (string extension in Settings.SubtitleExtensions)
+                {
+                    if (file.EndsWith(extension))
+                    {
+                        try
+                        {
+                            int season = Episode.ExtractSeason(file);
+                            int episode = Episode.ExtractEpisodeNumber(file);
+
+                            foreach (Episode ep in episodes)
+                            {
+                                if (ep.Season == season && ep.EpisodeNumber == episode)
+                                {
+                                    ep.SubtitlePath = file;
+                                    break;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            string[] directories = Directory.GetDirectories(path);
+
+            foreach (string directory in directories)
+                FindSubtitles(directory);
         }
 
         public void AdvanceEpisode()
