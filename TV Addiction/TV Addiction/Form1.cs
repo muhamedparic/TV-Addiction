@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Xml;
 
 namespace TV_Addiction
 {
@@ -17,7 +18,6 @@ namespace TV_Addiction
         public form_main()
         {
             InitializeComponent();
-            // TEMPORARY:
             Settings.Load();
         }
 
@@ -33,12 +33,22 @@ namespace TV_Addiction
 
         private void cbbox_selectSeries_SelectedIndexChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+#warning Method WIP
         }
 
         private void form_main_FormClosing(object sender, FormClosingEventArgs e)
         {
-#warning Saving not implemented
+            using (XmlTextWriter writer = new XmlTextWriter(Settings.UserDataFile, Encoding.UTF8))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartDocument();
+                writer.WriteStartElement("series");
+                foreach (Series series in cbbox_selectSeries.Items)
+                    series.WriteToXml(writer);
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Close();
+            }
         }
 
         private void btn_playNext_Click(object sender, EventArgs e)
@@ -55,6 +65,13 @@ namespace TV_Addiction
             {
                 MessageBox.Show("An error has occured, probably your fault");
             }
+        }
+
+        private void LoadUserData(string file = null)
+        {
+            if (file == null)
+                file = Settings.UserDataFile;
+            
         }
     }
 }

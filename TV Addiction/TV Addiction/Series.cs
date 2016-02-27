@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Xml;
 
 namespace TV_Addiction
 {
@@ -133,6 +134,15 @@ namespace TV_Addiction
         public override string ToString()
         {
             return Name;
+        }
+
+        public void WriteToXml(XmlTextWriter writer)
+        {
+            writer.WriteStartElement("show");
+            writer.WriteElementString("name", Name);
+            foreach (Episode ep in episodes)
+                ep.WriteToXml(writer);
+            writer.WriteEndElement();
         }
     }
 }

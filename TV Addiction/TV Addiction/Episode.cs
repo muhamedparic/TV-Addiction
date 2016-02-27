@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 
 namespace TV_Addiction
 {
@@ -22,7 +23,7 @@ namespace TV_Addiction
                 if (path[i].ToString().ToUpper() == "S")
                 {
                     if (path[i + 1] >= '0' && path[i + 1] <= '9' && path[i + 2] >= '0' && path[i + 2] <= '9')
-                        return 10 * Convert.ToInt32(path[i + 1]) + Convert.ToInt32(path[i + 2]);
+                        return 10 * (Convert.ToInt32(path[i + 1]) - 48) + (Convert.ToInt32(path[i + 2]) - 48);
                 }
             }
 
@@ -36,7 +37,7 @@ namespace TV_Addiction
                 if (path[i].ToString().ToUpper() == "E")
                 {
                     if (path[i + 1] >= '0' && path[i + 1] <= '9' && path[i + 2] >= '0' && path[i + 2] <= '9')
-                        return 10 * Convert.ToInt32(path[i + 1]) + Convert.ToInt32(path[i + 2]);
+                        return 10 * (Convert.ToInt32(path[i + 1]) - 48) + (Convert.ToInt32(path[i + 2]) - 48);
                 }
             }
 
@@ -68,6 +69,17 @@ namespace TV_Addiction
             {
                 return episodeNumber;
             }
+        }
+
+        public void WriteToXml(XmlTextWriter writer)
+        {
+            writer.WriteStartElement("episode");
+            writer.WriteElementString("path", Path);
+            if (SubtitlePath != null)
+                writer.WriteElementString("subtitle", SubtitlePath);
+            writer.WriteElementString("season", Season.ToString());
+            writer.WriteElementString("episode-number", EpisodeNumber.ToString());
+            writer.WriteEndElement();
         }
     }
 }
