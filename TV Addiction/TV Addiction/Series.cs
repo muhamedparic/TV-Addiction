@@ -142,6 +142,11 @@ namespace TV_Addiction
             return episodes[nextEpisodeIdx].EpisodeNumber;
         }
 
+        public Episode GetNextEpisodeObj()
+        {
+            return episodes[nextEpisodeIdx];
+        }
+
         public int GetNextEpisodeSeason()
         {
             return episodes[nextEpisodeIdx].Season;

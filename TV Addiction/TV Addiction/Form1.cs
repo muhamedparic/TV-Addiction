@@ -70,11 +70,12 @@ namespace TV_Addiction
             }
             try
             {
+                Episode ep = (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodeObj();
                 Process vlcProcess = new Process();
                 vlcProcess.StartInfo.FileName = Settings.VlcPath;
                 vlcProcess.StartInfo.Arguments = (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodePath();
-                //vlcProcess.StartInfo.Arguments = @"C:\Users\Muhamed\Downloads\TV\The.Office.US.S06.Season.6.Complete.720p.HDTV.x264-[maximersk]\The.Office.US.S06E13.720p.HDTV.X264-MRSK.mkv";
-
+                if (ckbox_useSubs.Checked && File.Exists(ep.SubtitlePath))
+                    vlcProcess.StartInfo.Arguments += " --sub-file=" + ep.SubtitlePath;
                 vlcProcess.Start();
             }
             catch (Exception)
