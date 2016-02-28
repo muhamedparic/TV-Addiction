@@ -37,8 +37,8 @@
             this.lbox_selectEpisode = new System.Windows.Forms.ListBox();
             this.btn_playNext = new System.Windows.Forms.Button();
             this.btn_playSelected = new System.Windows.Forms.Button();
-            this.btn_seriesSettings = new System.Windows.Forms.Button();
             this.fbd_selectFolder = new System.Windows.Forms.FolderBrowserDialog();
+            this.ckbox_useSubs = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -123,29 +123,31 @@
             // btn_playSelected
             // 
             this.btn_playSelected.Image = ((System.Drawing.Image)(resources.GetObject("btn_playSelected.Image")));
-            this.btn_playSelected.Location = new System.Drawing.Point(145, 214);
+            this.btn_playSelected.Location = new System.Drawing.Point(145, 164);
             this.btn_playSelected.Name = "btn_playSelected";
             this.btn_playSelected.Size = new System.Drawing.Size(109, 34);
             this.btn_playSelected.TabIndex = 5;
             this.btn_playSelected.Text = "Play selected";
             this.btn_playSelected.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_playSelected.UseVisualStyleBackColor = true;
+            this.btn_playSelected.Click += new System.EventHandler(this.btn_playSelected_Click);
             // 
-            // btn_seriesSettings
+            // ckbox_useSubs
             // 
-            this.btn_seriesSettings.Location = new System.Drawing.Point(145, 164);
-            this.btn_seriesSettings.Name = "btn_seriesSettings";
-            this.btn_seriesSettings.Size = new System.Drawing.Size(109, 34);
-            this.btn_seriesSettings.TabIndex = 6;
-            this.btn_seriesSettings.Text = "Settings";
-            this.btn_seriesSettings.UseVisualStyleBackColor = true;
+            this.ckbox_useSubs.AutoSize = true;
+            this.ckbox_useSubs.Location = new System.Drawing.Point(155, 216);
+            this.ckbox_useSubs.Name = "ckbox_useSubs";
+            this.ckbox_useSubs.Size = new System.Drawing.Size(86, 17);
+            this.ckbox_useSubs.TabIndex = 6;
+            this.ckbox_useSubs.Text = "Use subtitles";
+            this.ckbox_useSubs.UseVisualStyleBackColor = true;
             // 
             // form_main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(402, 262);
-            this.Controls.Add(this.btn_seriesSettings);
+            this.Controls.Add(this.ckbox_useSubs);
             this.Controls.Add(this.btn_playSelected);
             this.Controls.Add(this.btn_playNext);
             this.Controls.Add(this.lbox_selectEpisode);
@@ -157,6 +159,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.form_main_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -170,8 +173,8 @@
         private System.Windows.Forms.ListBox lbox_selectEpisode;
         private System.Windows.Forms.Button btn_playNext;
         private System.Windows.Forms.Button btn_playSelected;
-        private System.Windows.Forms.Button btn_seriesSettings;
         private System.Windows.Forms.FolderBrowserDialog fbd_selectFolder;
+        private System.Windows.Forms.CheckBox ckbox_useSubs;
     }
 }
 

@@ -3,6 +3,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Xml;
+using System.IO;
 
 namespace TV_Addiction
 {
@@ -147,6 +148,25 @@ namespace TV_Addiction
         private void lbox_selectSeason_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillEpisodeListBox();
+        }
+
+        private void btn_playSelected_Click(object sender, EventArgs e)
+        {
+            if (lbox_selectEpisode.SelectedItem == null)
+                MessageBox.Show("No episode selected", "Please select an episode");
+            else
+            {
+                Process vlcProcess = new Process();
+                Episode ep = lbox_selectEpisode.SelectedItem as Episode;
+                vlcProcess.StartInfo.FileName = Settings.VlcPath;
+                vlcProcess.StartInfo.Arguments = ep.Path;
+                if (ckbox_useSubs.Checked && File.Exists(ep.SubtitlePath))
+                    vlcProcess.StartInfo.Arguments += " --sub-file=" + ep.SubtitlePath;
+                vlcProcess.Start();
+                (cbbox_selectSeries.SelectedItem as Series).SetCounterTo(ep.Season, ep.EpisodeNumber);
+                (cbbox_selectSeries.SelectedItem as Series).AdvanceEpisode();
+                FillSeasonListBox();
+            }
         }
     }
 }
