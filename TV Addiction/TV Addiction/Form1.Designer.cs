@@ -76,6 +76,7 @@
             this.btn_deleteSeries.Text = "Delete";
             this.btn_deleteSeries.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_deleteSeries.UseVisualStyleBackColor = true;
+            this.btn_deleteSeries.Click += new System.EventHandler(this.btn_deleteSeries_Click);
             // 
             // btn_addSeries
             // 
@@ -97,6 +98,7 @@
             this.lbox_selectSeason.Name = "lbox_selectSeason";
             this.lbox_selectSeason.Size = new System.Drawing.Size(121, 134);
             this.lbox_selectSeason.TabIndex = 2;
+            this.lbox_selectSeason.SelectedIndexChanged += new System.EventHandler(this.lbox_selectSeason_SelectedIndexChanged);
             // 
             // lbox_selectEpisode
             // 

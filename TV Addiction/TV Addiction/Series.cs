@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
 
@@ -10,7 +7,6 @@ namespace TV_Addiction
 {
     class Series
     {
-        public string Path { get; set; }
         public string Name { get; set; }
         public Dictionary<int, int> EpisodeCount
         {
@@ -24,24 +20,41 @@ namespace TV_Addiction
         int nextEpisodeIdx;
         Dictionary<int, int> episodeCount;
 
-        public Series(string path, string name)
+        public List<Episode> Episodes
         {
-            Path = path;
+            get
+            {
+                return episodes;
+            }
+        }
+
+        public Series(string name, string path)
+        {
             Name = name;
             nextEpisodeIdx = 0;
             episodes = new List<Episode>();
+            episodeCount = new Dictionary<int, int>();
             FindVideos(path);
             FindSubtitles(path);
 
             episodes.Sort();
+            CountEpisodes();
+        }
 
+        public Series(string name, int nextEpisode)
+        {
+            Name = name;
+            nextEpisodeIdx = nextEpisode;
+            episodes = new List<Episode>();
             episodeCount = new Dictionary<int, int>();
-            foreach (Episode ep in episodes)
-            {
-                if (!episodeCount.ContainsKey(ep.Season))
-                    episodeCount[ep.Season] = 0;
-                episodeCount[ep.Season]++;
-            }
+        }
+
+        public void AddEpisode(string path, string subtitlePath, int season, int episodeNumber)
+        {
+            episodes.Add(new Episode(path, subtitlePath, season, episodeNumber));
+            if (!episodeCount.ContainsKey(season))
+                episodeCount[season] = 0;
+            episodeCount[season]++;
         }
 
         private void FindVideos(string path)
@@ -163,6 +176,29 @@ namespace TV_Addiction
             foreach (Episode ep in episodes)
                 ep.WriteToXml(writer);
             writer.WriteEndElement();
+        }
+
+        public void SetCounterTo(int season, int episode)
+        {
+            for (int i = 0; i < episodes.Count; i++)
+            {
+                if (episodes[i].Season == season && episodes[i].EpisodeNumber == episode)
+                {
+                    nextEpisodeIdx = i;
+                    return;
+                }
+            }
+            throw new ArgumentOutOfRangeException();
+        }
+
+        private void CountEpisodes()
+        {
+            foreach (Episode ep in episodes)
+            {
+                if (!episodeCount.ContainsKey(ep.Season))
+                    episodeCount[ep.Season] = 0;
+                episodeCount[ep.Season]++;
+            }
         }
     }
 }

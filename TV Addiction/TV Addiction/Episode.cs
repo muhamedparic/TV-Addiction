@@ -16,6 +16,14 @@ namespace TV_Addiction
             episodeNumber = ExtractEpisodeNumber(path);
         }
 
+        public Episode(string path, string subtitlePath, int season, int episodeNumber)
+        {
+            Path = path;
+            SubtitlePath = subtitlePath;
+            this.season = season;
+            this.episodeNumber = episodeNumber;
+        }
+
         public static int ExtractSeason(string path)
         {
             for (int i = 0; i < path.Length - 2; i++)
@@ -88,6 +96,11 @@ namespace TV_Addiction
             writer.WriteElementString("season", Season.ToString());
             writer.WriteElementString("episode-number", EpisodeNumber.ToString());
             writer.WriteEndElement();
+        }
+
+        public override string ToString()
+        {
+            return "Episode " + EpisodeNumber;
         }
     }
 }
