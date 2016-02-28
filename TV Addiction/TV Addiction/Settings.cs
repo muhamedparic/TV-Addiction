@@ -15,7 +15,7 @@ namespace TV_Addiction
             VideoExtensions = new List<string> { ".mkv", ".avi", ".mp4" };
             SubtitleExtensions = new List<string> { ".srt", ".sub" };
             UserDataFile = "userdata.xml";
-            VlcPath = @"C:\Program Files\VideoLAN\VLC\vlc.exe";
+            VlcPath = @"C:\Program Files\VideoLAN\VLC\vlcd.exe";
         }
 
         public static void Save()

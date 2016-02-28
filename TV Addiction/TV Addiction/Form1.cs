@@ -14,6 +14,11 @@ namespace TV_Addiction
             InitializeComponent();
             Settings.Load();
             LoadUserData();
+            if (!File.Exists(Settings.VlcPath))
+            {
+                MessageBox.Show("VLC not found!", "An error has occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
         }
 
         private void btn_addSeries_Click(object sender, EventArgs e)
@@ -58,6 +63,11 @@ namespace TV_Addiction
 
         private void btn_playNext_Click(object sender, EventArgs e)
         {
+            if (cbbox_selectSeries.Items.Count == 0)
+            {
+                MessageBox.Show("No series selected", "Please select a series", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 Process vlcProcess = new Process();
@@ -181,7 +191,7 @@ namespace TV_Addiction
         private void btn_playSelected_Click(object sender, EventArgs e)
         {
             if (lbox_selectEpisode.SelectedItem == null)
-                MessageBox.Show("No episode selected", "Please select an episode");
+                MessageBox.Show("Please select an episode", "No episode selected");
             else
             {
                 Process vlcProcess = new Process();
