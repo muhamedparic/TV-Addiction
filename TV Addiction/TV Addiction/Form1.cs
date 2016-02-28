@@ -114,7 +114,7 @@ namespace TV_Addiction
             {
                 if (MessageBox.Show("Are you sure you want to delete " + cbbox_selectSeries.SelectedItem.ToString() + "?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     cbbox_selectSeries.Items.RemoveAt(cbbox_selectSeries.SelectedIndex);
-                cbbox_selectSeries.SelectedIndex = 0;
+                cbbox_selectSeries.SelectedIndex = cbbox_selectSeries.Items.Count != 0 ? 0 : -1;
                 FillSeasonListBox();
             }
         }
@@ -122,6 +122,11 @@ namespace TV_Addiction
         private void FillSeasonListBox()
         {
             lbox_selectSeason.Items.Clear();
+            if (cbbox_selectSeries.Items.Count == 0)
+            {
+                lbox_selectEpisode.Items.Clear();
+                return;
+            }
 
             foreach (Episode ep in (cbbox_selectSeries.SelectedItem as Series).Episodes)
             {
@@ -130,6 +135,17 @@ namespace TV_Addiction
             }
 
             lbox_selectSeason.SelectedIndex = 0;
+
+            foreach (string season in lbox_selectSeason.Items)
+            {
+                if (season == "Season " + (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodeSeason().ToString())
+                {
+                    lbox_selectSeason.SelectedItem = season;
+                    break;
+                }
+                
+            }
+            
             FillEpisodeListBox();
         }
 
@@ -142,6 +158,18 @@ namespace TV_Addiction
                 if ("Season " + ep.Season.ToString() == (lbox_selectSeason.SelectedItem as string))
                     lbox_selectEpisode.Items.Add(ep);
             }
+            if ("Season " + (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodeSeason().ToString() == lbox_selectSeason.SelectedItem.ToString())
+            {
+                foreach (Episode ep in lbox_selectEpisode.Items)
+                {
+                    if ((cbbox_selectSeries.SelectedItem as Series).GetNextEpisode() == ep.EpisodeNumber)
+                    {
+                        lbox_selectEpisode.SelectedItem = ep;
+                        return;
+                    }
+                }
+            }
+
             lbox_selectEpisode.SelectedIndex = 0;
         }
 
