@@ -12,13 +12,18 @@ namespace TV_Addiction
         public form_main()
         {
             InitializeComponent();
-            Settings.Load();
-            LoadUserData();
-            if (!File.Exists(Settings.VlcPath))
+
+            try
             {
-                MessageBox.Show("VLC not found!", "An error has occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Settings.Load();
+            }
+            catch (FileNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "An error has occured", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
+
+            LoadUserData();
         }
 
         private void btn_addSeries_Click(object sender, EventArgs e)
@@ -71,12 +76,7 @@ namespace TV_Addiction
             try
             {
                 Episode ep = (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodeObj();
-                Process vlcProcess = new Process();
-                vlcProcess.StartInfo.FileName = Settings.VlcPath;
-                vlcProcess.StartInfo.Arguments = (cbbox_selectSeries.SelectedItem as Series).GetNextEpisodePath();
-                if (ckbox_useSubs.Checked && File.Exists(ep.SubtitlePath))
-                    vlcProcess.StartInfo.Arguments += " --sub-file=" + ep.SubtitlePath;
-                vlcProcess.Start();
+                PlayVideo(ep.Path, (ckbox_useSubs.Checked) ? ep.SubtitlePath : null);
             }
             catch (Exception)
             {
@@ -86,35 +86,69 @@ namespace TV_Addiction
             FillSeasonListBox();
         }
 
-        private void LoadUserData(string file = null)
+        private void LoadUserData()
         {
-            //if (file == null)
-            //    file = Settings.UserDataFile;
+            string file = Settings.UserDataFile;
+            if (!File.Exists(file))
+                return;
+            
+            using (XmlTextReader reader = new XmlTextReader(file))
+            {
+                string name = null, path = null, subPath = null;
+                int nextEp = -1, season = -1, epNumber = -1;
+                Series curSeries = null;
+                while (reader.Read())
+                {
+                    switch (reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            switch (reader.Name)
+                            {
+                                case "name":
+                                    reader.Read();
+                                    name = reader.Value;
+                                    break;
+                                case "next-episode":
+                                    reader.Read();
+                                    nextEp = Convert.ToInt32(reader.Value);
+                                    curSeries = new Series(name, nextEp);
+                                    break;
+                                case "path":
+                                    reader.Read();
+                                    path = reader.Value;
+                                    break;
+                                case "subtitle":
+                                    reader.Read();
+                                    subPath = reader.Value;
+                                    break;
+                                case "season":
+                                    reader.Read();
+                                    season = Convert.ToInt32(reader.Value);
+                                    break;
+                                case "episode-number":
+                                    reader.Read();
+                                    epNumber = Convert.ToInt32(reader.Value);
+                                    break;
+                            }
+                            break;
+                        case XmlNodeType.EndElement:
+                            switch (reader.Name)
+                            {
+                                case "show":
+                                    cbbox_selectSeries.Items.Add(curSeries);
+                                    break;
+                                case "episode":
+                                    curSeries.Episodes.Add(new Episode(path, subPath, season, epNumber));
+                                    subPath = null;
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
 
-            //using (XmlTextReader reader = new XmlTextReader(file))
-            //{
-            //    Series curSeries;
-            //    Episode curEpisode;
-            //    while (reader.Read())
-            //    {
-            //        switch (reader.NodeType)
-            //        {
-            //            case XmlNodeType.Element:
-            //                switch (reader.Name)
-            //                {
-            //                    case "show":
-            //                        reader.Read();
-            //                        string name = reader.Name;
-            //                        reader.Read();
-            //                        int nextEp = Convert.ToInt32(reader.Name);
-            //                        reader.Read();
-            //                        curSeries = new Series
-            //                        break;
-            //                }
-            //                break;
-            //        }
-            //    }
-            //}
+            if (cbbox_selectSeries.Items.Count > 0)
+                cbbox_selectSeries.SelectedIndex = 0;
         }
 
         private void btn_deleteSeries_Click(object sender, EventArgs e)
@@ -195,17 +229,22 @@ namespace TV_Addiction
                 MessageBox.Show("Please select an episode", "No episode selected");
             else
             {
-                Process vlcProcess = new Process();
                 Episode ep = lbox_selectEpisode.SelectedItem as Episode;
-                vlcProcess.StartInfo.FileName = Settings.VlcPath;
-                vlcProcess.StartInfo.Arguments = ep.Path;
-                if (ckbox_useSubs.Checked && File.Exists(ep.SubtitlePath))
-                    vlcProcess.StartInfo.Arguments += " --sub-file=" + ep.SubtitlePath;
-                vlcProcess.Start();
+                PlayVideo(ep.Path, (ckbox_useSubs.Checked) ? ep.SubtitlePath : null);
                 (cbbox_selectSeries.SelectedItem as Series).SetCounterTo(ep.Season, ep.EpisodeNumber);
                 (cbbox_selectSeries.SelectedItem as Series).AdvanceEpisode();
                 FillSeasonListBox();
             }
+        }
+
+        private void PlayVideo(string path, string subtitlePath = null)
+        {
+            Process vlcProcess = new Process();
+            vlcProcess.StartInfo.FileName = Settings.VlcPath;
+            vlcProcess.StartInfo.Arguments = path;
+            if (subtitlePath != null)
+                vlcProcess.StartInfo.Arguments += " --sub-file=" + subtitlePath;
+            vlcProcess.Start();
         }
     }
 }

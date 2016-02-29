@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace TV_Addiction
 {
@@ -11,16 +12,22 @@ namespace TV_Addiction
 
         public static void Load(string file = "config.xml")
         {
-#warning Method WIP
             VideoExtensions = new List<string> { ".mkv", ".avi", ".mp4" };
             SubtitleExtensions = new List<string> { ".srt", ".sub" };
             UserDataFile = "userdata.xml";
-            VlcPath = @"C:\Program Files\VideoLAN\VLC\vlc.exe";
-        }
+            string[] possibleVlcPaths = new string[] { @"C:\Program Files\VideoLAN\VLC\vlc.exe", @"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe" };
+            
+            foreach (string path in possibleVlcPaths)
+            {
+                if (File.Exists(path))
+                {
+                    VlcPath = path;
+                    break;
+                }
+            }
 
-        public static void Save()
-        {
-#warning Method WIP
+            if (VlcPath == null)
+                throw new FileNotFoundException("VLC not found!");
         }
     }
 }
