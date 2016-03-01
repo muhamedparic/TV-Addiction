@@ -51,10 +51,8 @@ namespace TV_Addiction
             using (XmlTextWriter writer = new XmlTextWriter(Settings.UserDataFile, Encoding.UTF8))
             {
                 if (cbbox_selectSeries.Items.Count == 0)
-                {
-                    writer.Close();
                     return;
-                }
+
                 writer.Formatting = Formatting.Indented;
                 writer.WriteStartDocument();
                 writer.WriteStartElement("series");
@@ -62,7 +60,6 @@ namespace TV_Addiction
                     series.WriteToXml(writer);
                 writer.WriteEndElement();
                 writer.WriteEndDocument();
-                writer.Close();
             }
         }
 
@@ -241,9 +238,11 @@ namespace TV_Addiction
         {
             Process vlcProcess = new Process();
             vlcProcess.StartInfo.FileName = Settings.VlcPath;
-            vlcProcess.StartInfo.Arguments = path;
+            vlcProcess.StartInfo.Arguments = "\"" + path + "\"";
             if (subtitlePath != null)
                 vlcProcess.StartInfo.Arguments += " --sub-file=" + subtitlePath;
+            else
+                vlcProcess.StartInfo.Arguments += " --no-sub-autodetect-file";
             vlcProcess.Start();
         }
     }
