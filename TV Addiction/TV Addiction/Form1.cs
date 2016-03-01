@@ -240,7 +240,7 @@ namespace TV_Addiction
             vlcProcess.StartInfo.FileName = Settings.VlcPath;
             vlcProcess.StartInfo.Arguments = "\"" + path + "\"";
             if (subtitlePath != null)
-                vlcProcess.StartInfo.Arguments += " --sub-file=" + subtitlePath;
+                vlcProcess.StartInfo.Arguments += " --sub-file=" + "\"" + subtitlePath + "\"";
             else
                 vlcProcess.StartInfo.Arguments += " --no-sub-autodetect-file";
             vlcProcess.Start();
