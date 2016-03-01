@@ -126,10 +126,9 @@ namespace TV_Addiction
 
         public void AdvanceEpisode()
         {
-            if (nextEpisodeIdx < episodes.Count - 1)
-                nextEpisodeIdx++;
-            else
-                throw new IndexOutOfRangeException("No episodes remaining");
+            
+            nextEpisodeIdx++;
+            nextEpisodeIdx %= episodes.Count;
         }
 
         public void ResetEpisodeCounter()
